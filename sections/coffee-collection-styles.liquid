@@ -1,0 +1,17 @@
+{% comment %}
+  Loads coffee-specific tweaks for collection pages.
+  Kept as a section so it only loads when the coffee collection template is used,
+  and so merchants can add/remove it from the theme editor if needed.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'collection-coffee.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'collection-coffee.css' | asset_url | stylesheet_tag }}</noscript>
+
+{% schema %}
+{
+  "name": "Coffee collection styles",
+  "tag": "section",
+  "class": "section-hidden",
+  "settings": []
+}
+{% endschema %}

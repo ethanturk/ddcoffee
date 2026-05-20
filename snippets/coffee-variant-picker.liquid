@@ -1,0 +1,75 @@
+{% comment %}
+  Variant picker — supports button or dropdown style per setting.
+  Uses <variant-selects> web component which intercepts changes and
+  updates URL + price + button state via Section Rendering API.
+{% endcomment %}
+
+<variant-selects
+  class="product-coffee__variants no-js-hidden"
+  data-section="{{ section.id }}"
+  data-url="{{ product.url }}"
+>
+  {%- for option in product.options_with_values -%}
+    <fieldset class="product-coffee__variant-fieldset">
+      <legend class="product-coffee__variant-label">
+        {{ option.name }}:
+        <span class="product-coffee__variant-selected" data-option-index="{{ forloop.index0 }}">
+          {{ option.selected_value }}
+        </span>
+      </legend>
+
+      {%- if section.settings.picker_type == 'dropdown' -%}
+        <select
+          class="product-coffee__variant-select"
+          name="options[{{ option.name | escape }}]"
+          data-option-index="{{ forloop.index0 }}"
+        >
+          {%- for value in option.values -%}
+            <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+              {{ value }}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- else -%}
+        <div class="product-coffee__variant-options">
+          {%- for value in option.values -%}
+            <input
+              type="radio"
+              id="option-{{ section.id }}-{{ forloop.index0 }}-{{ forloop.index }}"
+              name="options[{{ option.name | escape }}]"
+              value="{{ value | escape }}"
+              data-option-index="{{ forloop.index0 }}"
+              {% if option.selected_value == value %}checked{% endif %}
+              class="product-coffee__variant-input visually-hidden"
+            >
+            <label
+              for="option-{{ section.id }}-{{ forloop.index0 }}-{{ forloop.index }}"
+              class="product-coffee__variant-option"
+            >
+              {{ value }}
+            </label>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </fieldset>
+  {%- endfor -%}
+
+  <script type="application/json" data-variants>
+    {{ product.variants | json }}
+  </script>
+</variant-selects>
+
+<noscript>
+  <select name="id" class="product-coffee__variant-select">
+    {%- for variant in product.variants -%}
+      <option
+        value="{{ variant.id }}"
+        {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+        {% unless variant.available %}disabled{% endunless %}
+      >
+        {{ variant.title }} — {{ variant.price | money }}
+        {%- unless variant.available %} ({{ 'products.product.sold_out' | t }}){%- endunless %}
+      </option>
+    {%- endfor -%}
+  </select>
+</noscript>

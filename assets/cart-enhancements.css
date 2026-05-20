@@ -1,0 +1,184 @@
+/* ============================================================
+   Drifting Drams — Cart Drawer Enhancements
+   Typography and spacing tuned to match product page.
+   ============================================================ */
+
+cart-shipping-bar,
+cart-upsell,
+cart-ship-estimate {
+  display: block;
+}
+
+/* ---------- Free shipping bar ---------- */
+
+.cart-shipping-bar {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  background: rgba(var(--color-foreground), 0.02);
+}
+
+.cart-shipping-bar__message {
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem;
+  color: rgba(var(--color-foreground), 0.85);
+  letter-spacing: 0.01em;
+}
+
+.cart-shipping-bar__message strong {
+  font-weight: 600;
+}
+
+.cart-shipping-bar.is-qualified .cart-shipping-bar__message {
+  color: rgb(var(--color-foreground));
+}
+
+.cart-shipping-bar__track {
+  height: 4px;
+  background: rgba(var(--color-foreground), 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cart-shipping-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6f4e37 0%, #3e2723 100%);
+  border-radius: 2px;
+  transition: width 350ms ease;
+}
+
+.cart-shipping-bar.is-qualified .cart-shipping-bar__fill {
+  background: linear-gradient(90deg, #4a7c4e 0%, #2d5530 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-shipping-bar__fill {
+    transition: none;
+  }
+}
+
+/* ---------- Cross-sell / pairs well with ---------- */
+
+.cart-upsell {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.cart-upsell__heading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.85);
+  margin: 0 0 0.875rem;
+}
+
+.cart-upsell__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cart-upsell__item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cart-upsell__image-link {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+.cart-upsell__image-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-upsell__details {
+  min-width: 0;
+}
+
+.cart-upsell__title {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-upsell__title:hover {
+  text-decoration: underline;
+}
+
+.cart-upsell__price {
+  margin: 0.15rem 0 0;
+  font-size: 0.825rem;
+  color: rgba(var(--color-foreground), 0.65);
+}
+
+.cart-upsell__add {
+  padding: 0.5rem 0.95rem;
+  border: 1px solid rgb(var(--color-foreground));
+  border-radius: 4px;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.cart-upsell__add:hover:not(:disabled) {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.cart-upsell__add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Ship estimate ---------- */
+
+.cart-ship-estimate {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.875rem 1.5rem;
+  background: rgba(var(--color-foreground), 0.025);
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.cart-ship-estimate__icon {
+  color: rgba(var(--color-foreground), 0.7);
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.cart-ship-estimate__text {
+  font-size: 0.825rem;
+  line-height: 1.4;
+}
+
+.cart-ship-estimate__line {
+  margin: 0;
+}
+
+.cart-ship-estimate__line strong {
+  font-weight: 600;
+}

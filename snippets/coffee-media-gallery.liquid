@@ -1,0 +1,85 @@
+{% comment %}
+  Coffee media gallery — responsive, lazy-loaded.
+  First image is eager + fetchpriority=high; rest lazy.
+  Uses image_url filter with srcset for responsive serving.
+{% endcomment %}
+
+<media-gallery
+  id="MediaGallery-{{ section_id }}"
+  class="product-coffee__gallery"
+  data-section-id="{{ section_id }}"
+>
+  <div class="product-coffee__gallery-main" id="GalleryMain-{{ section_id }}">
+    {%- if product.featured_media -%}
+      {%- assign featured = product.featured_media -%}
+      <div class="product-coffee__gallery-slide is-active" data-media-id="{{ featured.id }}">
+        <img
+          src="{{ featured | image_url: width: 800 }}"
+          srcset="
+            {{ featured | image_url: width: 400 }} 400w,
+            {{ featured | image_url: width: 600 }} 600w,
+            {{ featured | image_url: width: 800 }} 800w,
+            {{ featured | image_url: width: 1200 }} 1200w,
+            {{ featured | image_url: width: 1600 }} 1600w
+          "
+          sizes="(min-width: 990px) 50vw, 100vw"
+          alt="{{ featured.alt | escape }}"
+          width="{{ featured.width }}"
+          height="{{ featured.height }}"
+          loading="eager"
+          fetchpriority="high"
+          class="product-coffee__gallery-image"
+        >
+      </div>
+    {%- endif -%}
+
+    {%- for media in product.media -%}
+      {%- unless media.id == product.featured_media.id -%}
+        <div class="product-coffee__gallery-slide" data-media-id="{{ media.id }}" hidden>
+          {%- if media.media_type == 'image' -%}
+            <img
+              src="{{ media | image_url: width: 800 }}"
+              srcset="
+                {{ media | image_url: width: 400 }} 400w,
+                {{ media | image_url: width: 600 }} 600w,
+                {{ media | image_url: width: 800 }} 800w,
+                {{ media | image_url: width: 1200 }} 1200w
+              "
+              sizes="(min-width: 990px) 50vw, 100vw"
+              alt="{{ media.alt | escape }}"
+              width="{{ media.width }}"
+              height="{{ media.height }}"
+              loading="lazy"
+              class="product-coffee__gallery-image"
+            >
+          {%- elsif media.media_type == 'video' -%}
+            {{ media | video_tag: image_size: '800x', loop: false, controls: true, muted: false }}
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if product.media.size > 1 -%}
+    <div class="product-coffee__gallery-thumbs" role="tablist">
+      {%- for media in product.media -%}
+        <button
+          type="button"
+          class="product-coffee__gallery-thumb {% if media.id == product.featured_media.id %}is-active{% endif %}"
+          data-media-id="{{ media.id }}"
+          aria-label="View image {{ forloop.index }}"
+          role="tab"
+        >
+          <img
+            src="{{ media | image_url: width: 160 }}"
+            srcset="{{ media | image_url: width: 160 }} 1x, {{ media | image_url: width: 320 }} 2x"
+            alt=""
+            width="80"
+            height="80"
+            loading="lazy"
+          >
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</media-gallery>

@@ -1,1 +1,113 @@
+{%- comment -%}
+  Drifting Drams customization:
+  Wraps Dawn's cart-drawer snippet with coffee-specific enhancements.
+  The snippet itself (snippets/cart-drawer.liquid) is untouched so
+  upstream Dawn merges stay clean.
+
+  The enhancements are added as separate web components that find
+  their slot in the drawer via JS — they don't modify the cart HTML
+  structure directly.
+{%- endcomment -%}
+
 {%- render 'cart-drawer' -%}
+
+<cart-enhancements
+  data-shipping-threshold="{{ section.settings.shipping_threshold }}"
+  data-shipping-enabled="{{ section.settings.show_shipping_bar }}"
+  data-upsell-enabled="{{ section.settings.show_upsell }}"
+  data-upsell-collection="{{ section.settings.fallback_upsell_collection }}"
+  data-ship-estimate-enabled="{{ section.settings.show_ship_estimate }}"
+  data-fulfillment-days="{{ section.settings.fulfillment_days }}"
+  data-transit-min-days="{{ section.settings.transit_min_days }}"
+  data-transit-max-days="{{ section.settings.transit_max_days }}"
+></cart-enhancements>
+
+<link rel="stylesheet" href="{{ 'cart-enhancements.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'cart-enhancements.css' | asset_url | stylesheet_tag }}</noscript>
+<script src="{{ 'cart-enhancements.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Free shipping bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_bar",
+      "label": "Show free shipping progress",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "shipping_threshold",
+      "label": "Free shipping threshold (in store currency, no symbol)",
+      "default": 50,
+      "info": "Must be kept in sync with your actual shipping config in Settings → Shipping."
+    },
+    {
+      "type": "header",
+      "content": "Cross-sell"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_upsell",
+      "label": "Show \"pairs well with\" recommendations",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "fallback_upsell_collection",
+      "label": "Fallback upsell collection",
+      "info": "Used when Shopify's recommendations API returns nothing for the cart."
+    },
+    {
+      "type": "header",
+      "content": "Estimated delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ship_estimate",
+      "label": "Show estimated delivery date",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "These values mirror what's configured in Settings → Shipping and delivery → Estimated delivery dates (Manual). Keep them in sync so the cart shows the same date range customers see at checkout."
+    },
+    {
+      "type": "range",
+      "id": "fulfillment_days",
+      "label": "Fulfillment time (business days)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 1,
+      "unit": "days",
+      "info": "How long from order to ship. Same as Shopify's fulfillment time setting."
+    },
+    {
+      "type": "range",
+      "id": "transit_min_days",
+      "label": "Transit time min (business days)",
+      "min": 1,
+      "max": 14,
+      "step": 1,
+      "default": 2,
+      "unit": "days"
+    },
+    {
+      "type": "range",
+      "id": "transit_max_days",
+      "label": "Transit time max (business days)",
+      "min": 1,
+      "max": 21,
+      "step": 1,
+      "default": 5,
+      "unit": "days"
+    }
+  ]
+}
+{% endschema %}

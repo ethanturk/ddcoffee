@@ -1,0 +1,98 @@
+/* ============================================================
+   Drifting Drams — Collection Page Tweaks
+   Layered over Dawn's facets + grid to feel more coffee-shop.
+   ============================================================ */
+
+/* Make the section header less generic */
+.collection-hero__title {
+  font-family: var(--font-heading-family);
+  letter-spacing: -0.01em;
+}
+
+/* Sidebar filter container — slightly more breathing room */
+.facets-vertical .facets-wrapper {
+  padding-right: 1.5rem;
+}
+
+/* Filter group headings — make them feel like editorial labels */
+.facets__heading,
+.facets__summary {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.85);
+}
+
+/* Active filter chips at the top */
+.active-facets__button {
+  background: rgba(var(--color-foreground), 0.06);
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.9rem;
+  transition: background 150ms ease;
+}
+
+.active-facets__button:hover {
+  background: rgba(var(--color-foreground), 0.12);
+}
+
+/* Filter checkbox rows — tighter, more refined */
+.facets__list .facets__item label {
+  padding: 0.35rem 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.facets__list .facets__item label:hover {
+  color: rgba(var(--color-foreground), 1);
+}
+
+/* Filter counts — quieter */
+.facets__list .facets__item .facets__label-count {
+  color: rgba(var(--color-foreground), 0.5);
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+/* Product cards — subtle warmth */
+.card-wrapper .card {
+  transition: transform 250ms ease;
+}
+
+.card-wrapper:hover .card {
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-wrapper:hover .card {
+    transform: none;
+  }
+  .card-wrapper .card {
+    transition: none;
+  }
+}
+
+/* Sort dropdown — align with our type system */
+.facet-filters__sort {
+  font-family: var(--font-body-family);
+  font-size: 0.9rem;
+}
+
+/* Mobile drawer — give the open button more presence */
+@media (max-width: 989px) {
+  .mobile-facets__open {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+}
+
+/* Hide the styles-loader section's own wrapper since it has no visual content */
+.section-hidden {
+  display: none;
+}

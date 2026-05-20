@@ -1,0 +1,142 @@
+{% comment %}
+  Drifting Drams — Coffee Product Page
+  Custom section optimized for coffee products with variants.
+  Uses Shopify's Section Rendering API for variant switching (no full reloads).
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'product-coffee.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'product-coffee.css' | asset_url | stylesheet_tag }}</noscript>
+
+<section
+  id="MainProduct-{{ section.id }}"
+  class="product-coffee page-width"
+  data-section="{{ section.id }}"
+>
+  <div class="product-coffee__grid">
+    {%- comment -%} Gallery — eager first image, lazy the rest {%- endcomment -%}
+    <div class="product-coffee__media">
+      {%- render 'coffee-media-gallery', product: product, section_id: section.id -%}
+    </div>
+
+    {%- comment -%} Info column {%- endcomment -%}
+    <div class="product-coffee__info">
+      <product-info
+        id="ProductInfo-{{ section.id }}"
+        data-section="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-url="{{ product.url }}"
+      >
+        <header class="product-coffee__header">
+          {%- if product.metafields.coffee.origin -%}
+            <p class="product-coffee__origin">{{ product.metafields.coffee.origin }}</p>
+          {%- endif -%}
+
+          <h1 class="product-coffee__title">{{ product.title }}</h1>
+
+          <div class="product-coffee__price" id="price-{{ section.id }}">
+            {%- render 'price', product: product, use_variant: true -%}
+          </div>
+        </header>
+
+        {%- if product.metafields.coffee.tasting_notes -%}
+          {%- render 'coffee-tasting-notes', notes: product.metafields.coffee.tasting_notes -%}
+        {%- endif -%}
+
+        {%- if product.description != blank -%}
+          <div class="product-coffee__description rte">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Variant picker — only shown if product has variants {%- endcomment -%}
+        {%- unless product.has_only_default_variant -%}
+          {%- render 'coffee-variant-picker', product: product, section: section -%}
+        {%- endunless -%}
+
+        {%- comment -%} Buy form {%- endcomment -%}
+        <product-form
+          class="product-coffee__form"
+          data-section-id="{{ section.id }}"
+        >
+          {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'form', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" value="1" min="1">
+
+            <button
+              type="submit"
+              name="add"
+              class="product-coffee__add-to-cart button button--primary"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            >
+              <span class="add-to-cart-text">
+                {%- if product.selected_or_first_available_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              <div class="loading-overlay__spinner hidden">
+                <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                </svg>
+              </div>
+            </button>
+          {%- endform -%}
+        </product-form>
+
+        {%- comment -%} Coffee-specific metafield blocks {%- endcomment -%}
+        {%- if product.metafields.coffee.brew_recommendations -%}
+          {%- render 'coffee-brew-recommendations', recommendations: product.metafields.coffee.brew_recommendations -%}
+        {%- endif -%}
+
+        {%- if product.metafields.coffee.roast_level -%}
+          <div class="product-coffee__roast">
+            {%- render 'coffee-roast-meter', level: product.metafields.coffee.roast_level -%}
+          </div>
+        {%- endif -%}
+      </product-info>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'product-coffee.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Coffee product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_size",
+      "label": "Media size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Variant picker"
+    },
+    {
+      "type": "select",
+      "id": "picker_type",
+      "label": "Picker style",
+      "options": [
+        { "value": "button", "label": "Buttons" },
+        { "value": "dropdown", "label": "Dropdown" }
+      ],
+      "default": "button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coffee product"
+    }
+  ]
+}
+{% endschema %}

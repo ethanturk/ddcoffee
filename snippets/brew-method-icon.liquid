@@ -1,0 +1,70 @@
+{% comment %}
+  Inline SVG icons for brew methods. Stroke-based so they inherit currentColor.
+{% endcomment %}
+
+{%- case icon -%}
+  {%- when 'aeropress' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M14 8h20l-2 6H16l-2-6z"/>
+      <path d="M16 14v22a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V14"/>
+      <path d="M18 38v3h12v-3"/>
+      <line x1="20" y1="20" x2="28" y2="20"/>
+      <line x1="20" y1="26" x2="28" y2="26"/>
+      <line x1="20" y1="32" x2="28" y2="32"/>
+    </svg>
+
+  {%- when 'pourover' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 12h24l-4 14H16l-4-14z"/>
+      <path d="M18 26l2 8h8l2-8"/>
+      <path d="M22 14v6M26 14v6"/>
+      <ellipse cx="24" cy="38" rx="10" ry="2"/>
+    </svg>
+
+  {%- when 'espresso' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M14 16h18v12a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8V16z"/>
+      <path d="M32 20h3a3 3 0 0 1 0 6h-3"/>
+      <path d="M20 8c0 2-2 2-2 4s2 2 2 4"/>
+      <path d="M26 8c0 2-2 2-2 4s2 2 2 4"/>
+    </svg>
+
+  {%- when 'french-press' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M16 10h16v28a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V10z"/>
+      <path d="M20 10V6h8v4"/>
+      <line x1="16" y1="22" x2="32" y2="22"/>
+      <line x1="24" y1="6" x2="24" y2="22"/>
+      <path d="M24 6h-1"/>
+    </svg>
+
+  {%- when 'cold-brew' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M14 12h20v26a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V12z"/>
+      <line x1="14" y1="20" x2="34" y2="20"/>
+      <path d="M18 28c2-1 4 1 6 0s4-1 6 0"/>
+      <path d="M18 34c2-1 4 1 6 0s4-1 6 0"/>
+      <path d="M24 6v4M20 7l2 3M28 7l-2 3"/>
+    </svg>
+
+  {%- when 'moka' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M14 24h20v12a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V24z"/>
+      <path d="M16 24v-8h16v8"/>
+      <path d="M20 16v-4h8v4"/>
+      <path d="M34 28h4l-2 6h-2"/>
+    </svg>
+
+  {%- when 'drip' -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="10" y="10" width="28" height="8" rx="1"/>
+      <path d="M14 18v6M34 18v6"/>
+      <path d="M12 24h24l-2 14H14l-2-14z"/>
+      <path d="M24 26v8"/>
+    </svg>
+
+  {%- else -%}
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <circle cx="24" cy="24" r="14"/>
+    </svg>
+{%- endcase -%}

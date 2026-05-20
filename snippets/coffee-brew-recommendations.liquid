@@ -1,0 +1,18 @@
+{% comment %}
+  Brew recommendations — rich text metafield (coffee.brew_recommendations).
+  Use to show suggested brewing methods, ratios, grind sizes.
+{% endcomment %}
+
+{%- if recommendations != blank -%}
+  <details class="product-coffee__brew">
+    <summary class="product-coffee__brew-summary">
+      <h2 class="product-coffee__section-title">Brewing recommendations</h2>
+      <svg class="product-coffee__brew-icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </summary>
+    <div class="product-coffee__brew-content rte">
+      {{ recommendations | metafield_tag }}
+    </div>
+  </details>
+{%- endif -%}

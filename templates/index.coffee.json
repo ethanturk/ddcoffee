@@ -1,0 +1,219 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Coffee that drifts where you do",
+            "heading_size": "h0"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Small-batch single origins and signature blends, roasted to order.",
+            "text_style": "subtitle"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop coffee",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "Read the story",
+            "button_link_2": "/pages/about",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "desktop_content_position": "middle-left",
+        "show_text_box": false,
+        "desktop_content_alignment": "left",
+        "color_scheme": "scheme-3",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": true
+      }
+    },
+    "featured_blends": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Signature blends",
+        "heading_size": "h1",
+        "description": "<p>Named after the dogs and drinks we love.</p>",
+        "show_description": true,
+        "description_style": "subtitle",
+        "collection": "blends",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "show_view_all": true,
+        "view_all_style": "link",
+        "enable_quick_add": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "1",
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
+    "single_origins": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Single origins",
+        "heading_size": "h1",
+        "description": "<p>Direct from farm — Dominican Republic, Honduras, Colombia, and more.</p>",
+        "show_description": true,
+        "description_style": "subtitle",
+        "collection": "single-origin",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-2",
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_quick_add": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "brew_picker": {
+      "type": "brew-method-picker",
+      "blocks": {
+        "aeropress": {
+          "type": "method",
+          "settings": {
+            "label": "AeroPress",
+            "link": "/collections/aeropress",
+            "icon": "aeropress"
+          }
+        },
+        "pourover": {
+          "type": "method",
+          "settings": {
+            "label": "Pour Over",
+            "link": "/collections/pour-over",
+            "icon": "pourover"
+          }
+        },
+        "espresso": {
+          "type": "method",
+          "settings": {
+            "label": "Espresso",
+            "link": "/collections/espresso",
+            "icon": "espresso"
+          }
+        },
+        "french_press": {
+          "type": "method",
+          "settings": {
+            "label": "French Press",
+            "link": "/collections/french-press",
+            "icon": "french-press"
+          }
+        },
+        "cold_brew": {
+          "type": "method",
+          "settings": {
+            "label": "Cold Brew",
+            "link": "/collections/cold-brew",
+            "icon": "cold-brew"
+          }
+        }
+      },
+      "block_order": ["aeropress", "pourover", "espresso", "french_press", "cold_brew"],
+      "settings": {
+        "heading": "How do you brew?",
+        "subheading": "Find coffee suited to your method.",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "story": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Roasted with intention",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every batch is profiled by hand, sampled before release, and shipped within days of roasting. No mystery beans, no holding bins — just coffee at its peak.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Our process",
+            "button_link": "/pages/process"
+          }
+        }
+      },
+      "block_order": ["heading", "text", "button"],
+      "settings": {
+        "height": "medium",
+        "layout": "text_first",
+        "desktop_image_width": "medium",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Notes from the roaster",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>New releases, brewing experiments, and the occasional dog photo.</p>"
+          }
+        },
+        "email_form": {
+          "type": "email_form"
+        }
+      },
+      "block_order": ["heading", "paragraph", "email_form"],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured_blends",
+    "single_origins",
+    "brew_picker",
+    "story",
+    "newsletter"
+  ]
+}

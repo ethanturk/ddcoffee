@@ -1,0 +1,25 @@
+{% comment %}
+  Roast meter — single integer metafield (coffee.roast_level, 1-5).
+  Renders a visual scale from light to dark roast.
+{% endcomment %}
+
+{%- assign roast = level | plus: 0 -%}
+{%- if roast > 0 -%}
+  <div class="roast-meter" aria-label="Roast level {{ roast }} of 5">
+    <span class="roast-meter__label">Roast</span>
+    <div class="roast-meter__scale">
+      {%- for i in (1..5) -%}
+        <span class="roast-meter__bean {% if i <= roast %}roast-meter__bean--filled{% endif %}" aria-hidden="true"></span>
+      {%- endfor -%}
+    </div>
+    <span class="roast-meter__caption">
+      {%- case roast -%}
+        {%- when 1 -%}Light
+        {%- when 2 -%}Medium-light
+        {%- when 3 -%}Medium
+        {%- when 4 -%}Medium-dark
+        {%- when 5 -%}Dark
+      {%- endcase -%}
+    </span>
+  </div>
+{%- endif -%}

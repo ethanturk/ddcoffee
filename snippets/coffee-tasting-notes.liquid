@@ -1,0 +1,19 @@
+{% comment %}
+  Tasting notes — expects a list metafield (coffee.tasting_notes).
+  Each note renders as a chip. Falls back gracefully if metafield is empty.
+{% endcomment %}
+
+{%- if notes != blank -%}
+  <div class="product-coffee__tasting-notes">
+    <h2 class="product-coffee__section-title">Tasting notes</h2>
+    <ul class="product-coffee__notes-list">
+      {%- if notes.value -%}
+        {%- for note in notes.value -%}
+          <li class="product-coffee__note">{{ note }}</li>
+        {%- endfor -%}
+      {%- else -%}
+        <li class="product-coffee__note">{{ notes }}</li>
+      {%- endif -%}
+    </ul>
+  </div>
+{%- endif -%}
