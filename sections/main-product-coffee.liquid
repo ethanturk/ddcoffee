@@ -58,7 +58,7 @@
           class="product-coffee__form"
           data-section-id="{{ section.id }}"
         >
-          {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'form', novalidate: 'novalidate' -%}
+          {%- form section.id, class: 'form', novalidate: 'novalidate' -%}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
             <input type="hidden" name="quantity" value="1" min="1">
 
@@ -140,3 +140,14 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- form 'product', product, id: 'product-form-' | append: section.id, class:
+    'form', novalidate: 'novalidate' -%}"
+  to: "{%- form section.id, class: 'form', novalidate: 'novalidate' -%}"
+  position: 2324..2388
+{% endcomment %}
