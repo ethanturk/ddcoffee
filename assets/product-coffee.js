@@ -2,10 +2,10 @@
  * Drifting Drams — Coffee product page JS
  *
  * Vanilla web components, no dependencies. Patterns:
- *  - <variant-selects> intercepts variant changes, updates URL and
+ *  - <coffee-variant-selects> intercepts variant changes, updates URL and
  *    re-fetches the rendered section for price/availability.
- *  - <media-gallery> handles thumbnail clicks.
- *  - <product-form> handles AJAX add-to-cart with cart drawer refresh.
+ *  - <coffee-media-gallery> handles thumbnail clicks.
+ *  - <coffee-product-form> handles AJAX add-to-cart with cart drawer refresh.
  */
 
 // ---------- Variant selection ----------
@@ -211,12 +211,12 @@ class VariantSelects extends HTMLElement {
     }
   }
 }
-customElements.define('variant-selects', VariantSelects);
+customElements.define('coffee-variant-selects', VariantSelects);
 
 // ---------- Product info wrapper (mostly a hook for future extension) ----------
 
 class ProductInfo extends HTMLElement {}
-customElements.define('product-info', ProductInfo);
+customElements.define('coffee-product-info', ProductInfo);
 
 // ---------- Media gallery ----------
 
@@ -250,7 +250,7 @@ class MediaGallery extends HTMLElement {
     });
   }
 }
-customElements.define('media-gallery', MediaGallery);
+customElements.define('coffee-media-gallery', MediaGallery);
 
 // ---------- Product form (AJAX add to cart) ----------
 
@@ -343,4 +343,4 @@ class ProductForm extends HTMLElement {
     if (spinner) spinner.classList.toggle('hidden', !isLoading);
   }
 }
-customElements.define('product-form', ProductForm);
+customElements.define('coffee-product-form', ProductForm);

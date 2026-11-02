@@ -1,10 +1,10 @@
 {% comment %}
   Variant picker — supports button or dropdown style per setting.
-  Uses <variant-selects> web component which intercepts changes and
+  Uses <coffee-variant-selects> web component which intercepts changes and
   updates URL + price + button state via Section Rendering API.
 {% endcomment %}
 
-<variant-selects
+<coffee-variant-selects
   class="product-coffee__variants no-js-hidden"
   data-section="{{ section.id }}"
   data-url="{{ product.url }}"
@@ -57,7 +57,7 @@
   <script type="application/json" data-variants>
     {{ product.variants | json }}
   </script>
-</variant-selects>
+</coffee-variant-selects>
 
 <noscript>
   <select name="id" class="product-coffee__variant-select">

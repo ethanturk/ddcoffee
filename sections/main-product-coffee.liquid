@@ -20,7 +20,7 @@
 
     {%- comment -%} Info column {%- endcomment -%}
     <div class="product-coffee__info">
-      <product-info
+      <coffee-product-info
         id="ProductInfo-{{ section.id }}"
         data-section="{{ section.id }}"
         data-product-id="{{ product.id }}"
@@ -54,7 +54,7 @@
         {%- endunless -%}
 
         {%- comment -%} Buy form {%- endcomment -%}
-        <product-form
+        <coffee-product-form
           class="product-coffee__form"
           data-section-id="{{ section.id }}"
         >
@@ -82,7 +82,7 @@
               </div>
             </button>
           {%- endform -%}
-        </product-form>
+        </coffee-product-form>
 
         {%- comment -%} Coffee-specific metafield blocks {%- endcomment -%}
         {%- if product.metafields.coffee.brew_recommendations -%}
@@ -94,7 +94,7 @@
             {%- render 'coffee-roast-meter', level: product.metafields.coffee.roast_level -%}
           </div>
         {%- endif -%}
-      </product-info>
+      </coffee-product-info>
     </div>
   </div>
 </section>
