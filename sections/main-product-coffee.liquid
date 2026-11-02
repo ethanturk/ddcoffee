@@ -58,7 +58,7 @@
           class="product-coffee__form"
           data-section-id="{{ section.id }}"
         >
-          {%- form section.id, class: 'form', novalidate: 'novalidate' -%}
+          {%- form 'product', product, id: 'product-form-' | append: section.id, class: 'form', novalidate: 'novalidate' -%}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
             <input type="hidden" name="quantity" value="1" min="1">
 
