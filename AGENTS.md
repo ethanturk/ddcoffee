@@ -16,7 +16,7 @@ The merchant is a long-time C# developer working in Liquid for the first time; c
 2. Dawn's files are large (the cart drawer snippet is ~580 lines) and well-tested. Forking them means owning bugs Dawn would otherwise fix.
 3. Coffee-specific behavior is conceptually separate from base theme behavior — separation in the filesystem reflects separation in concept.
 
-There is **one exception**: `sections/cart-drawer.liquid`. Dawn ships this as a one-line wrapper (`{%- render 'cart-drawer' -%}`) and we replaced it with a wrapper that *also* mounts our enhancements. The underlying snippet `snippets/cart-drawer.liquid` is still untouched. If you find yourself wanting to make a *second* exception, push back hard against that instinct first — there's almost always an additive way.
+There are **two exceptions**, both for the cart drawer enhancements: `layout/theme.liquid` mounts the `<cart-enhancements>` element and its CSS/JS assets (inside the `cart_type == 'drawer'` block), and `config/settings_schema.json` carries the "Cart drawer" settings group. The underlying snippet `snippets/cart-drawer.liquid` is still untouched — enhancements attach to it via JS slot injection, never markup. An earlier version of this fork replaced `sections/cart-drawer.liquid` as a wrapper, but that section was never rendered on any page — Dawn's layout renders the *snippet* — so the replacement was dead code and the section file has since been deleted. If the same trap tempts you again: a replacement section file is inert unless something renders it. If you find yourself wanting to make a *third* exception, push back hard against that instinct first — there's almost always an additive way.
 
 **Practical implication for new work:** when extending, prefer creating new sections/snippets/assets over editing existing ones. If a Dawn file is "in the way," find the JS or CSS hook to layer on top of it instead of editing it.
 
@@ -24,10 +24,10 @@ There is **one exception**: `sections/cart-drawer.liquid`. Dawn ships this as a 
 
 | Area | New files | Pattern |
 |---|---|---|
-| Product page | `sections/main-product-coffee.liquid`, `snippets/coffee-*.liquid`, `assets/product-coffee.{css,js}`, `templates/product.coffee.json` | Custom section + alternate JSON template merchants assign per-product. Three web components: `<variant-selects>`, `<media-gallery>`, `<product-form>`. |
+| Product page | `sections/main-product-coffee.liquid`, `snippets/coffee-*.liquid`, `assets/product-coffee.{css,js}`, `templates/product.coffee.json` | Custom section + alternate JSON template merchants assign per-product. Web components: `<coffee-variant-selects>`, `<coffee-media-gallery>`, `<coffee-product-info>`, `<coffee-product-form>`. The `coffee-` prefix isn't cosmetic — Dawn's `global.js` defines `variant-selects` on every page, so a bare re-`define` throws `NotSupportedError` and kills the rest of the script. |
 | Homepage | `sections/brew-method-picker.liquid`, `snippets/brew-method-icon.liquid`, `assets/brew-method-picker.css`, `templates/index.coffee.json` | Custom section for brew picker; homepage template uses stock Dawn sections + the new picker. Inline SVG icons (no external asset). |
 | Collection page | `sections/coffee-collection-styles.liquid`, `assets/collection-coffee.css`, `templates/collection.coffee.json` | Uses Dawn's `main-collection-product-grid` with `filter_type: vertical`; styling overlay only. Filters configured in admin (Search & discovery), not theme. |
-| Cart drawer | `sections/cart-drawer.liquid` (**replaces** Dawn's wrapper), `assets/cart-enhancements.{css,js}` | Three independent web components (`<cart-shipping-bar>`, `<cart-upsell>`, `<cart-ship-estimate>`) mounted into Dawn's drawer via JS slot injection. Dawn snippet untouched. |
+| Cart drawer | `assets/cart-enhancements.{css,js}` (mounted from `layout/theme.liquid`; settings in the "Cart drawer" group of `settings_schema.json`) | Three independent web components (`<cart-shipping-bar>`, `<cart-upsell>`, `<cart-ship-estimate>`) mounted into Dawn's drawer via JS slot injection. Dawn snippet untouched. |
 
 ## Conventions
 
@@ -73,8 +73,8 @@ If a future Drifting Drams brand identity wants colors *outside* Dawn's palette 
 
 `config/settings_schema.json` is a Dawn file with hundreds of lines that Shopify ships and updates. Editing it = merge conflict on every upstream pull. So:
 
-- Coffee-specific settings (free shipping threshold, fulfillment days, etc.) live on the **section schemas** that use them
-- Global theme settings go in `settings_schema.json` only if there's no choice (e.g., a setting referenced from many sections); so far there hasn't been a case
+- Coffee-specific settings live on the **section schemas** that use them
+- Global theme settings go in `settings_schema.json` only if there's no choice. The one case that has arisen: the **cart drawer enhancements** mount from `layout/theme.liquid` (outside any template section), so their settings can't live on a section — they sit in a "Cart drawer" group (ids prefixed `cart_`) in `settings_schema.json`
 
 This makes the merchant edit experience slightly less centralized but keeps the file boundary clean.
 
@@ -105,7 +105,7 @@ This is the trickiest area because of the Dawn snippet you can't edit. Pattern:
 
 1. Add a new web component class to `assets/cart-enhancements.js`. Subscribe to `cartState` for change events.
 2. Add a new injection slot in the `injectSlots()` function — find a DOM target inside `<cart-drawer>` and insert the component there. Be defensive: check the target exists, check the component isn't already inserted (the slot injection is idempotent and re-runs on every drawer re-render).
-3. Add a new settings group to `sections/cart-drawer.liquid` schema. Pass values to the `<cart-enhancements>` element via `data-*` attributes.
+3. Add the setting to the "Cart drawer" group in `config/settings_schema.json` (prefix the id with `cart_`). Pass the value to the `<cart-enhancements>` element in `layout/theme.liquid` via a `data-*` attribute.
 4. Read the new config in `readConfig()`.
 5. Style in `assets/cart-enhancements.css` using Dawn variables.
 

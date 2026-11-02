@@ -1,6 +1,6 @@
 # Drifting Drams — Shopify Theme
 
-Forked from Shopify's Dawn theme. Customizations are mostly additive — almost no Dawn files are modified, so upstream changes can be pulled in via `git pull upstream main` with minimal conflict. The one exception is `sections/cart-drawer.liquid` (a one-line Dawn wrapper that this fork replaces with a wrapper that also loads cart enhancements — see below).
+Forked from Shopify's Dawn theme. Customizations are mostly additive — almost no Dawn files are modified, so upstream changes can be pulled in via `git pull upstream main` with minimal conflict. The exceptions are `layout/theme.liquid` (which mounts the cart-drawer enhancements globally) and `config/settings_schema.json` (which appends a "Cart drawer" settings group) — see below.
 
 ## What's customized
 
@@ -11,7 +11,6 @@ Custom files added (no Dawn files modified):
 | `sections/main-product-coffee.liquid` | Coffee-focused product page with variant switching via Section Rendering API, responsive gallery, metafield-driven info blocks |
 | `sections/brew-method-picker.liquid` | Homepage section with inline-SVG brew method icons linking to filtered collections |
 | `sections/coffee-collection-styles.liquid` | Stylesheet loader for collection page tweaks |
-| `sections/cart-drawer.liquid` | **Replaces** Dawn's one-line wrapper. Renders the original `cart-drawer` snippet untouched, then mounts three enhancement web components and adds a schema for their settings. |
 | `snippets/coffee-*.liquid` | Tasting notes, brew recommendations, roast meter, media gallery, variant picker |
 | `snippets/brew-method-icon.liquid` | Inline SVG icons (AeroPress, pour over, espresso, French press, cold brew, moka, drip) |
 | `assets/product-coffee.{css,js}` | Product page styling + web components (`<variant-selects>`, `<media-gallery>`, `<product-form>`) |
@@ -76,7 +75,7 @@ Homepage: Online Store → Themes → Customize → top bar template selector �
 
 ### 5. Cart drawer
 
-Configure in the theme editor: open Customize → click any page → in the left rail, scroll to the "Cart drawer" section (it loads on every page since the drawer is global). The section has three groups:
+Configure in the theme editor: open Customize → top bar → gear icon (Theme settings) → "Cart drawer". The settings live at the theme level, not in a page section, because the enhancement components now mount globally from `layout/theme.liquid` (gated on the merchant's cart type being "drawer"). The group has three sections:
 
 **Free shipping bar**
 - Toggle on/off
@@ -110,14 +109,15 @@ The brew method picker on the homepage links to `/collections/<handle>` per meth
 - **AJAX add-to-cart** assumes Dawn's `<cart-drawer>` element is on the page. If swapped out later, the fallback dispatches a `cart:added` event.
 - **Cart drawer enhancements re-inject after re-renders.** Dawn replaces the drawer's innerHTML on cart mutations; a MutationObserver re-mounts our components. The observer is debounced and skips self-triggered mutations, but it is small ongoing overhead.
 - **Delivery estimate is a mirror, not a source of truth.** Shopify doesn't expose its computed dates to storefront Liquid. The cart reproduces Shopify's manual-mode math from theme settings. If you change Shopify's settings, update the cart's too.
-- **The `cart-drawer.liquid` section is the one Dawn file this fork replaces.** It's a one-line Dawn wrapper; we replaced it with a slightly longer one that adds a schema and mounts enhancements. Upstream changes to that file will conflict on merge.
+- **Cart drawer enhancements mount from `layout/theme.liquid`.** The free-shipping bar, cross-sell, and delivery-estimate components load globally from the layout (in the `cart_type == 'drawer'` block), with their settings in the theme-level "Cart drawer" group. This is the main Dawn-file edit in the fork; upstream changes to `layout/theme.liquid` will conflict on merge.
 
 ## Pulling Dawn updates
 
-Standard upstream sync. Almost all customizations are new files, so most upstream merges will be clean. Two files will conflict:
+Standard upstream sync. Almost all customizations are new files, so most upstream merges will be clean. A few files will conflict:
 
 - `README.md` — this section was prepended; resolve by keeping both halves.
-- `sections/cart-drawer.liquid` — Dawn's one-line wrapper was replaced with our enhancement-loading version. If upstream changes it (rare — it's been a one-liner for a long time), resolve by re-applying our wrapper logic.
+- `layout/theme.liquid` — the `<cart-enhancements>` element and the `cart-enhancements.{css,js}` asset tags were added in the cart-drawer block. If upstream changes the cart-drawer render vicinity, re-apply the element and asset tags.
+- `config/settings_schema.json` — a "Cart drawer" settings group was appended at the end. Re-apply it if upstream rewrites the file.
 
 ```sh
 git remote add upstream https://github.com/Shopify/dawn.git  # one time

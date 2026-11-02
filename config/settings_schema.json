@@ -1451,5 +1451,88 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Cart drawer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Free shipping bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_shipping_bar",
+        "label": "Show free shipping progress",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "cart_shipping_threshold",
+        "label": "Free shipping threshold (in store currency, no symbol)",
+        "default": 50,
+        "info": "Must be kept in sync with your actual shipping config in Settings \u2192 Shipping."
+      },
+      {
+        "type": "header",
+        "content": "Cross-sell"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_upsell",
+        "label": "Show \"pairs well with\" recommendations",
+        "default": true
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Fallback upsell collection",
+        "info": "Used when Shopify's recommendations API returns nothing for the cart."
+      },
+      {
+        "type": "header",
+        "content": "Estimated delivery"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_ship_estimate",
+        "label": "Show estimated delivery date",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "These values mirror what's configured in Settings \u2192 Shipping and delivery \u2192 Estimated delivery dates (Manual). Keep them in sync so the cart shows the same date range customers see at checkout."
+      },
+      {
+        "type": "range",
+        "id": "cart_fulfillment_days",
+        "label": "Fulfillment time (business days)",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "default": 1,
+        "unit": "days",
+        "info": "How long from order to ship. Same as Shopify's fulfillment time setting."
+      },
+      {
+        "type": "range",
+        "id": "cart_transit_min_days",
+        "label": "Transit time min (business days)",
+        "min": 1,
+        "max": 14,
+        "step": 1,
+        "default": 2,
+        "unit": "days"
+      },
+      {
+        "type": "range",
+        "id": "cart_transit_max_days",
+        "label": "Transit time max (business days)",
+        "min": 1,
+        "max": 21,
+        "step": 1,
+        "default": 5,
+        "unit": "days"
+      }
+    ]
   }
 ]

@@ -264,6 +264,8 @@
       {{ 'component-totals.css' | asset_url | stylesheet_tag }}
       {{ 'component-price.css' | asset_url | stylesheet_tag }}
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+      <link rel="stylesheet" href="{{ 'cart-enhancements.css' | asset_url }}" media="print" onload="this.media='all'">
+      <noscript>{{ 'cart-enhancements.css' | asset_url | stylesheet_tag }}</noscript>
     {%- endif -%}
 
     {%- unless settings.type_body_font.system? -%}
@@ -305,6 +307,17 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
+
+      <cart-enhancements
+        data-shipping-threshold="{{ settings.cart_shipping_threshold }}"
+        data-shipping-enabled="{{ settings.cart_show_shipping_bar }}"
+        data-upsell-enabled="{{ settings.cart_show_upsell }}"
+        data-upsell-collection="{{ settings.cart_upsell_collection }}"
+        data-ship-estimate-enabled="{{ settings.cart_show_ship_estimate }}"
+        data-fulfillment-days="{{ settings.cart_fulfillment_days }}"
+        data-transit-min-days="{{ settings.cart_transit_min_days }}"
+        data-transit-max-days="{{ settings.cart_transit_max_days }}"
+      ></cart-enhancements>
     {%- endif -%}
 
     {% sections 'header-group' %}
@@ -371,6 +384,7 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'cart-enhancements.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   </body>
 </html>
